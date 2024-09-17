@@ -61,12 +61,16 @@ public class Main {
 
     public static void gerarRelatorio(String nomeArquivo) throws IOException {
         FileWriter writer = new FileWriter(nomeArquivo);
-
+        int cf = 10;
+        
+        writer.write("Matriz de Consumo por Subestação\n");
+        writer.write(String.format("%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s%-" + cf + "s\n",
+        " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"));
         writer.write("Matriz de Consumo por Subestação\n");
         for (int i = 0; i < 5; i++) {
-            writer.write(subestacoes[i] + "\t");
+            writer.write(String.format("%-" + cf + "s", subestacoes[i]));            
             for (int j = 0; j < 12; j++) {
-                writer.write(consumo[i][j] + "\t");
+                writer.write(String.format("%-" + cf + "d", consumo[i][j]));
             }
             writer.write("\n");
         }
@@ -107,7 +111,7 @@ public class Main {
             for (int j = 0; j < 12; j++) {
                 totalSubestacao += consumo[i][j];
             }
-            writer.write(subestacoes[i] + ": " + (totalSubestacao / 12.0) + "\n");
+            writer.write(subestacoes[i] + ": " + mostrarMedia(totalSubestacao / 12.0) + "\n");
         }
 
         writer.write("\nMeses e total de energia consumida ordenada por consumo (decrescente)\n");
@@ -137,6 +141,10 @@ public class Main {
         }
 
         writer.close();
+    }
+    
+    public static String mostrarMedia(double totalSubestacao){
+        return String.format("%.2f", totalSubestacao);
     }
 }
 
